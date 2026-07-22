@@ -1,1 +1,27 @@
-#check if the URL send a 200 response status or not
+import requests
+
+def check_url_response(url):
+    """Check if URL returns a 200 status code"""
+    try:
+        response = requests.get(url, timeout=5)
+        if response.status_code == 200:
+            print(f"✓ {url} returns 200 OK")
+            return True
+        else:
+            print(f"✗ {url} returns {response.status_code}")
+            return False
+    except requests.exceptions.RequestException as e:
+        print(f"✗ Error checking {url}: {e}")
+        return False
+
+# Example usage
+if __name__ == "__main__":
+    # Test URLs
+    urls = [
+        "https://github.com",
+        "https://example.com",
+        "https://invalid-url-that-does-not-exist-12345.com"
+    ]
+    
+    for url in urls:
+        check_url_response(url)
